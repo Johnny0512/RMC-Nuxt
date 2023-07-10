@@ -2,7 +2,7 @@
     <html data-theme="light" class="bg-base-200">
     <div>
         <Header></Header>
-        <main class="bg-base-100 rounded-2xl shadow-2xl m-10 p-10">
+        <main class="bg-base-100 rounded-2xl shadow-2xl m-10 p-10 ">
             <slot/>
         </main>
         <GlobalFooter></GlobalFooter>

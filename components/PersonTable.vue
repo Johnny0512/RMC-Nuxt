@@ -1,28 +1,20 @@
 <template>
+<!--    TODO: 头像文件测试集，展示逻辑优化，表头动态设计，添加登陆访问认证，加载动画    -->
     <div class="overflow-x-auto">
         <table class="table">
             <!-- head -->
             <thead>
             <tr>
-                <th>
-                    <label>
-                        <input type="checkbox" class="checkbox"/>
-                    </label>
-                </th>
                 <th>Name</th>
-                <th>Job</th>
-                <th>Favorite Color</th>
+                <th>Major</th>
+                <th>Graduate Year</th>
+                <th>Score</th>
                 <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody v-for="row in results.data.records">
             <!-- row 1 -->
             <tr>
-                <th>
-                    <label>
-                        <input type="checkbox" class="checkbox"/>
-                    </label>
-                </th>
                 <td>
                     <div class="flex items-center space-x-3">
                         <div class="avatar">
@@ -32,135 +24,71 @@
                             </div>
                         </div>
                         <div>
-                            <div class="font-bold">Hart Hagerty</div>
-                            <div class="text-sm opacity-50">United States</div>
+                            <div class="font-bold">{{row.name}}</div>
+                            <div class="text-sm opacity-50">{{row.email}}</div>
                         </div>
                     </div>
                 </td>
                 <td>
-                    Zemlak, Daniel and Leannon
+                    {{ row.major }}
                     <br/>
-                    <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                    <span class="badge badge-ghost badge-sm">{{ row.college }}</span>
                 </td>
-                <td>Purple</td>
-                <th>
-                    <button class="btn btn-ghost btn-xs">details</button>
-                </th>
-            </tr>
-            <!-- row 2 -->
-            <tr>
-                <th>
-                    <label>
-                        <input type="checkbox" class="checkbox"/>
-                    </label>
-                </th>
+                <td>{{ row.gradYear }}</td>
                 <td>
-                    <div class="flex items-center space-x-3">
-                        <div class="avatar">
-                            <div class="mask mask-squircle w-12 h-12">
-                                <img src="/assets/images/koala.jpg"
-                                     alt="Avatar Tailwind CSS Component"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="font-bold">Brice Swyre</div>
-                            <div class="text-sm opacity-50">China</div>
-                        </div>
+                    <div :class="'rounded-xl font-bold text-white ' + color(row.score) +' mr-10 flex justify-center'">
+                        {{ row.score }}
                     </div>
                 </td>
-                <td>
-                    Carroll Group
-                    <br/>
-                    <span class="badge badge-ghost badge-sm">Tax Accountant</span>
-                </td>
-                <td>Red</td>
-                <th>
-                    <button class="btn btn-ghost btn-xs">details</button>
-                </th>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-                <th>
-                    <label>
-                        <input type="checkbox" class="checkbox"/>
-                    </label>
-                </th>
-                <td>
-                    <div class="flex items-center space-x-3">
-                        <div class="avatar">
-                            <div class="mask mask-squircle w-12 h-12">
-                                <img src="/assets/images/koala.jpg"
-                                     alt="Avatar Tailwind CSS Component"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="font-bold">Marjy Ferencz</div>
-                            <div class="text-sm opacity-50">Russia</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    Rowe-Schoen
-                    <br/>
-                    <span class="badge badge-ghost badge-sm">Office Assistant I</span>
-                </td>
-                <td>Crimson</td>
-                <th>
-                    <button class="btn btn-ghost btn-xs">details</button>
-                </th>
-            </tr>
-            <!-- row 4 -->
-            <tr>
-                <th>
-                    <label>
-                        <input type="checkbox" class="checkbox"/>
-                    </label>
-                </th>
-                <td>
-                    <div class="flex items-center space-x-3">
-                        <div class="avatar">
-                            <div class="mask mask-squircle w-12 h-12">
-                                <img src="/assets/images/koala.jpg"
-                                     alt="Avatar Tailwind CSS Component"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="font-bold">Yancy Tear</div>
-                            <div class="text-sm opacity-50">Brazil</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    Wyman-Ledner
-                    <br/>
-                    <span class="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-                </td>
-                <td>Indigo</td>
                 <th>
                     <button class="btn btn-ghost btn-xs">details</button>
                 </th>
             </tr>
             </tbody>
-            <!-- foot -->
-            <!--            <tfoot>-->
-            <!--            <tr>-->
-            <!--                <th></th>-->
-            <!--                <th>Name</th>-->
-            <!--                <th>Job</th>-->
-            <!--                <th>Favorite Color</th>-->
-            <!--                <th></th>-->
-            <!--            </tr>-->
-            <!--            </tfoot>-->
         </table>
-        <div class="join">
-            <button class="join-item btn">1</button>
-            <button class="join-item btn">2</button>
-            <button class="join-item btn btn-disabled">...</button>
-            <button class="join-item btn">99</button>
-            <button class="join-item btn">100</button>
+        <br clear="all"/>
+        <div class="flex justify-center">
+            <div class="join">
+                <div v-for="i in results.data.pages">
+                    <div v-if="i == results.data.current">
+                        <input class="join-item btn btn-square" type="radio" name="options" :aria-label=i @click="handlePageChange(i)" checked/>
+                    </div>
+                    <div v-else>
+                        <input class="join-item btn btn-square" type="radio" name="options" :aria-label=i @click="handlePageChange(i)"/>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
 </template>
 <script setup>
+import {getStudentList} from "~/composables/api";
+
+const loading = ref(false)
+const {data: results} = await reactive(
+    getStudentList(),
+)
+console.log(results)
+const handlePageChange = async (page) => {
+    console.log(page)
+    loading.value = true
+    const res = await getStudentList(page)
+    results.value = res.data.value
+    loading.value = false
+    return results
+}
+
+const color = (score) => {
+    if (score < 3) {
+        return "bg-red-500"
+    } else if (score < 4) {
+        return "bg-yellow-500"
+    } else {
+        return "bg-green-500"
+    }
+}
+
+
 </script>
