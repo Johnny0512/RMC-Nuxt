@@ -1,5 +1,5 @@
 <template>
-<!--    TODO: 头像文件测试集，展示逻辑优化，表头动态设计，添加登陆访问认证，加载动画    -->
+  <!--    TODO: 头像文件测试集，展示逻辑优化，表头动态设计，添加登陆访问认证，加载动画    -->
     <div class="overflow-x-auto">
         <table class="table">
             <!-- head -->
@@ -24,8 +24,8 @@
                             </div>
                         </div>
                         <div>
-                            <div class="font-bold">{{row.name}}</div>
-                            <div class="text-sm opacity-50">{{row.email}}</div>
+                            <div class="font-bold">{{ row.name }}</div>
+                            <div class="text-sm opacity-50">{{ row.email }}</div>
                         </div>
                     </div>
                 </td>
@@ -41,7 +41,7 @@
                     </div>
                 </td>
                 <th>
-                    <button class="btn btn-ghost btn-xs">details</button>
+                    <button class="btn btn-ghost btn-xs"><NuxtLink :to="'/details/detail-'+ row.stuId" target="_blank" >details</NuxtLink></button>
                 </th>
             </tr>
             </tbody>
@@ -51,17 +51,17 @@
             <div class="join">
                 <div v-for="i in results.data.pages">
                     <div v-if="i == results.data.current">
-                        <input class="join-item btn btn-square" type="radio" name="options" :aria-label=i @click="handlePageChange(i)" checked/>
+                        <input class="join-item btn btn-square" type="radio" name="options" :aria-label=i
+                               @click="handlePageChange(i)" checked/>
                     </div>
                     <div v-else>
-                        <input class="join-item btn btn-square" type="radio" name="options" :aria-label=i @click="handlePageChange(i)"/>
+                        <input class="join-item btn btn-square" type="radio" name="options" :aria-label=i
+                               @click="handlePageChange(i)"/>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </template>
 <script setup>
 import {getStudentList} from "~/composables/api";
