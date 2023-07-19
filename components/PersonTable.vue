@@ -19,7 +19,7 @@
                     <div class="flex items-center space-x-3">
                         <div class="avatar">
                             <div class="mask mask-squircle w-12 h-12">
-                                <img src="/assets/images/koala.jpg"
+                                <img :src="'https://i.pravatar.cc/300?img=' + getRandomInt(70)"
                                      alt="Avatar Tailwind CSS Component"/>
                             </div>
                         </div>
@@ -88,6 +88,9 @@ const color = (score) => {
     } else {
         return "bg-green-500"
     }
+}
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
 }
 
 
