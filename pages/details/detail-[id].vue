@@ -65,32 +65,44 @@
             <div v-for="record in comments.data">
                 <div class="divider mx-10"></div>
                 <div class="flex flex-row card bg-base-300 rounded-box p-5 mx-10">
-                    <div class="flex flex-col w-1/3">
-                        <div class="font-bold">
-                            <div v-if="record.name == null">
-                                Anonymous Student
-                            </div>
-                            <div v-else>
-                                {{ record.name }}
-                            </div>
-                        </div>
-                        <template v-for="(attr, name, index) in record">
-                            <div v-if="name.startsWith('rat')">
-                                <div class="flex flex-rol justify-between">
-                                    <div class="ml-3 text-xs">{{
-                                            name.replace('rat', '').replace('Eff', ' Efficiency')
-                                        }}:
-                                    </div>
-                                    <div :class="textColor(attr)+' text-xs'">{{ attr }}</div>
+                    <div class="flex w-2/5 flex-row">
+                            <div class="font-bold w-3/5">
+                                <div v-if="record.name == null">
+                                    Anonymous Student
+                                </div>
+                                <div v-else>
+                                    {{ record.name }}
                                 </div>
                             </div>
-                        </template>
+                            <div class="flex w-2/5">
+                                <div class="w-full">
+                                    <div class="font-bold">
+                                        Ratings:
+                                    </div>
+                                    <template v-for="(attr, name, index) in record">
+                                        <div v-if="name.startsWith('rat')">
+                                            <div class="flex flex-row justify-between">
+                                                <div class="text-xs">{{
+                                                        name.replace('rat', '').replace('Eff', ' Efficiency')
+                                                    }}:
+                                                </div>
+                                                <div :class="textColor(attr)+' text-xs font-bold'">{{ attr }}</div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+
+                            </div>
+
                     </div>
 
                     <div class="divider divider-horizontal">+</div>
-                    <div class="w-2/3 rounded-2xl bg-white p-5 border-zinc-400 border-2 flex flex-col justify-between">
-                        <div>
+                    <div class="w-3/5 rounded-2xl bg-white p-5 border-zinc-400 border-2 flex flex-col justify-between">
+                        <div v-if="record.comment != null">
                             {{ record.comment }}
+                        </div>
+                        <div v-else>
+                            No comment.
                         </div>
                         <div class="text-xs flex justify-end">
                             Posted on:{{ record.createTime }}
