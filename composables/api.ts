@@ -40,9 +40,9 @@ export const getDetailedComments = (id: string) => {
         }
     })
 }
-export const searchByName = (name: string = '') => {
+export const searchByName = (name: string = '', page: number = 1) => {
     const runtimeConfig = useRuntimeConfig()
-    return useFetch(('/stu_info/searchByName?name='+name), {
+    return useFetch(('/stu_info/searchByName?name='+name+'&currentPage='+page), {
         baseURL: runtimeConfig.public.apiBase,
         method: 'get',
         headers: {

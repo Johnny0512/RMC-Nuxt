@@ -1,5 +1,5 @@
 <template>
-  <!--    TODO: 头像文件测试集，展示逻辑优化，表头动态设计，添加登陆访问认证，加载动画    -->
+  <!--    TODO: 头像文件测试集，展示逻辑优化，表头动态设计，添加登陆访问认证    -->
     <div class="flex justify-between items-center">
         <div class="font-bold text-2xl">
             Student List
@@ -66,24 +66,24 @@
         <br clear="all"/>
         <div class="flex justify-center justify-between mb-5">
             <div class="join">
-                <button class="join-item btn" @click="handlePageChange(results.data.current - 1)"
+                <button class="join-item btn" @click="handlePageChange(studentName,results.data.current - 1)"
                         :disabled=isStartPage(results.data.current)>«
                 </button>
                 <button class="join-item btn">Page {{ results.data.current }}</button>
-                <button class="join-item btn" @click="handlePageChange(results.data.current + 1)"
+                <button class="join-item btn" @click="handlePageChange(studentName,results.data.current + 1)"
                         :disabled=isEndPage(results.data.current)>»
                 </button>
             </div>
             <div class="join">
-                <input class="input input-bordered join-item rounded-l-full w-1/3 " v-model="page"
+                <input class="input input-bordered join-item rounded-l-full" v-model="page"
                        placeholder="Jump to..."/>
-                <button class="btn join-item rounded-r-full" @click="handlePageChange(page)">GO</button>
+                <button class="btn join-item rounded-r-full" @click="handlePageChange(studentName,page)">GO</button>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import {getStudentDetail, getStudentList, searchByName} from "~/composables/api";
+import {searchByName} from "~/composables/api";
 const page = ref('')
 
 const studentName = ref('')
@@ -91,20 +91,18 @@ const studentName = ref('')
 const isLoading = ref(false)
 
 const {data: results} = await reactive(
-    getStudentList(),
+    searchByName(),
 )
 
-const handlePageChange = async (page) => {
-    console.log(page)
+const handlePageChange = async (name, page) => {
     isLoading.value = true
-    const res = await getStudentList(page)
+    const res = await searchByName(name, page)
     results.value = res.data.value
     isLoading.value = false
     return results
 }
 
 const search = async (studentName) => {
-    console.log(studentName)
     isLoading.value = true
     const res = await searchByName(studentName)
     results.value = res.data.value
@@ -122,7 +120,7 @@ function isStartPage(page) {
 }
 
 function isEndPage(page) {
-    if (page == results.pages) {
+    if (page == results.value.data.pages) {
         return true
     } else {
         return false
